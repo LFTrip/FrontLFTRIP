@@ -7,35 +7,6 @@ export default class Createtrip extends Component{
         this.state = {
         }
     }
-    Createtrip(e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        fetch('http://localhost:8080/api/v1/trips' + JSON.parse(localStorage.getItem('user')).username + '/' + id, {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            _id: id,
-            username: JSON.parse(localStorage.getItem('user')).username,
-            title,
-            category,
-            image,
-            content,
-        }),
-        })
-        .then((response) => response.json())
-        .then((data) => {
-        if(data.hasOwnProperty('ok')) {
-            setSuccess(true);
-        }
-        })
-        .catch((error) => {
-        console.error(error);
-        });
-    };
 
     render()
     {
@@ -52,7 +23,7 @@ export default class Createtrip extends Component{
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5 space-form">
-                                        <input id="title" class="form-control" type="text" placeholder="Title" name="title"/>
+                                        <input id="title" class="form-control" type="text" placeholder="Title" name="title" value={title}/>
                                     </div>
                                     <div class="col-md-7 space-form">
                                         <input id="address" class="form-control" type="text" placeholder="Address" name="address"/>
