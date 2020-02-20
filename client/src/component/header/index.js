@@ -12,7 +12,7 @@ const Header = () => (
                     </div>
                     <div id="login-pan" className="col-md-6 hidden-xs">
                         <Link data-section="sign-in" to={ROUTES.SIGN_UP}><i className="icon fa fa-user user"></i> Sign up</Link>
-                        <Link  data-section="sign-in" to={ROUTES.SIGN_IN}><i className="icon fa fa-user user"></i> Login</Link>
+                        <Link data-section="sign-in" to={ROUTES.SIGN_IN}><i className="icon fa fa-user user"></i> Login</Link>
                     </div>
                 </div>
             </div>			

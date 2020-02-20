@@ -1,10 +1,11 @@
 import  * as conf from '../../const/params';
 import axios from "axios";
 const config = {
-    url : "http://localhost:8081/",
+    url : "http://localhost:8081/api/v1/",
     uri : {
         "login" : 'login',
-        "logout" : "logout"
+        "logout" : "logout",
+        "users" : "users"
     }
 }
 export default class BackConnexion{
@@ -12,12 +13,9 @@ export default class BackConnexion{
         this.authListener = {}
     }
 
-    dosignWithEmailAndPassword = (data, uri) =>{
-        data.email = "feige@gmail.com";
-        data.password = "password";
-        
+    dosignWithEmailAndPassword = (data) =>{
         return new Promise((resolve, reject) => { resolve(axios.post(
-            config["url"]+config["uri"][uri],
+            config.url+config.uri.login,
             {
                 "email": data.email,
                 "password" : data.password
@@ -35,6 +33,26 @@ export default class BackConnexion{
             }).catch(error =>{
                 reject( console.log(error));
             })) });
+    }
+
+    doCreateUserWithEmailAndPassword = (data) =>{
+        return new Promise((resolve, reject) => { resolve(axios.post(
+            config.url+config.uri.users,
+            {
+                "firstname": data.firstname,
+                "lastname" : data.lastname,
+                "email": data.email,
+                "password" : data.password,
+            }).then(response=> {
+
+            if(response.status === 200){
+                console.log(response.data)
+            }else{
+                ///reject( console.log(response.data));
+            }
+        }).catch(error =>{
+            reject( console.log(error));
+        })) });
     }
 
     onlogOut = data =>{
