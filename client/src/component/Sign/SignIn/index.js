@@ -7,6 +7,8 @@ import { SignUpLink } from '../SignUp';
 import { withBackaccessContext } from '../../BackEnd';
 import * as ROUTES from '../../../const/routes';
 import { PasswordForgetLink } from '../../Password/PasswordForget';
+import { FormErrors } from '../../Error/index';
+
 
 	const SignInPage = () => (
 		<section id="login-page">
@@ -17,7 +19,11 @@ import { PasswordForgetLink } from '../../Password/PasswordForget';
 const INITIAL_STATE = {
 	email: '',
 	password: '',
-	error: null,
+	formErrors: {email: '', password: ''},
+	emailValid: false,
+	passwordValid: false,
+	formValid: false,
+	error: null
 };
 
 class SignInFormBase extends Component {
@@ -55,8 +61,38 @@ class SignInFormBase extends Component {
 	};
 
 	onChange = event => {
-		this.setState({ [event.target.name]: event.target.value })
+		const name = event.target.name;
+		const value = event.target.value;
+		this.setState({ [event.target.name]: event.target.value },
+			() => { this.validateField(name, value) });
 	};
+
+	validateField(fieldName, value) {
+		let fieldValidationErrors = this.state.formErrors;
+		let emailValid = this.state.emailValid;
+		let passwordValid = this.state.passwordValid;
+
+		switch(fieldName) {
+			case 'email':
+				emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+				fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+				break;
+			case 'password':
+				passwordValid = value.length >= 6;
+				fieldValidationErrors.password = passwordValid ? '': ' must be superior to 6 characters';
+				break;
+			default:
+				break;
+		}
+		this.setState({formErrors: fieldValidationErrors,
+			emailValid: emailValid,
+			passwordValid: passwordValid
+		}, this.validateForm);
+	}
+
+	validateForm() {
+		this.setState({formValid: this.state.emailValid && this.state.passwordValid});
+	}
 
 	render() {
 		const { email, password, error } = this.state;
@@ -84,18 +120,31 @@ class SignInFormBase extends Component {
 						<div className="box">
 							<h2 className="title">Login</h2>
 							<form onSubmit={this.onSubmit}>
+								{/*<FormErrors formErrors={this.state.formErrors} />*/}
+
 								<div className="field">
 									<input	name="email" value={email} onChange={this.onChange} class="form-control" type="text" placeholder="Email Address" />
 									<i className="fa fa-user user"></i>
 								</div>
+								{ !this.state.emailValid ? (
+									<small className="color-red">{ "invalid email syntax" }</small>
+								) : (
+									""
+								)}
+
 								<div className="field">
 									<input 	name="password" value={password} onChange={this.onChange} class="form-control"  type="password" placeholder="Password" />
 									<i className="fa fa-ellipsis-h"></i>
 								</div>
-								
+								{ !this.state.passwordValid ? (
+									<small className="color-red">{ "password must have more than 6 character" }</small>
+								) : (
+									""
+								)}
+
 								<div className="field footer-form text-right">
 									<span className="remember"><input class="labelauty" type="checkbox" data-labelauty="Keep me signed in" checked/></span>
-									<button className="btn btn-default button-form"  type="submit" disabled={ email === "" || password === "" }>Login</button>
+									<button className="btn btn-default button-form"  type="submit" disabled={!this.state.formValid}>Login</button>
 								</div>		
 								{error && <p>{error.message}</p>}
 							</form>		

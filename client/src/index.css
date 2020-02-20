@@ -2,3 +2,6 @@
 .enlever{
     display: block !important;
 }
+.color-red {
+    color: red;
+}
