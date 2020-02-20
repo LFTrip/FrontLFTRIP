@@ -10,7 +10,7 @@ import PasswordForgetPage from '../Password/PasswordForget';
 
 import * as ROUTES from '../../const/routes';
 import { withAuthentification } from '../Session';
-import {Triplist, Createtrip,TripDetail} from '../Trip'
+import {Triplist, Createtrip,TripDetail} from '../Trip';
 const App = () => (
 		<div id="page-container">
 			<Router>
