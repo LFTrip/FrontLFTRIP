@@ -23,7 +23,7 @@ export default class Createtrip extends Component{
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5 space-form">
-                                        <input id="title" class="form-control" type="text" placeholder="Title" name="title" value={title}/>
+                                        <input id="title" class="form-control" type="text" placeholder="Title" name="title"/>
                                     </div>
                                     <div class="col-md-7 space-form">
                                         <input id="address" class="form-control" type="text" placeholder="Address" name="address"/>
