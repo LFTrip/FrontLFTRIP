@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-
+import { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
 import { SignUpLink } from '../SignUp';
 import { withBackaccessContext } from '../../BackEnd';
 import * as ROUTES from '../../../const/routes';
@@ -33,6 +34,17 @@ class SignInFormBase extends Component {
 			.then(() => {
 				this.setState({ ...INITIAL_STATE });
 				this.props.history.push(ROUTES.HOME);
+				store.addNotification({
+					title: 'Signin success',
+					message: 'Welcome back',
+					type: 'success',                         // 'default', 'success', 'info', 'warning'
+					container: 'bottom-right',                // where to position the notifications
+					animationIn: ["animated", "fadeIn"],     // animate.css classes that's applied
+					animationOut: ["animated", "fadeOut"],   // animate.css classes that's applied
+					dismiss: {
+						duration: 3000
+					}
+				})
 				console.log("ok")
 			})
 			.catch(error => {
@@ -43,7 +55,7 @@ class SignInFormBase extends Component {
 	};
 
 	onChange = event => {
-		this.setState({ [event.target.name]: event.target.value });
+		this.setState({ [event.target.name]: event.target.value })
 	};
 
 	render() {
@@ -83,7 +95,7 @@ class SignInFormBase extends Component {
 								
 								<div className="field footer-form text-right">
 									<span className="remember"><input class="labelauty" type="checkbox" data-labelauty="Keep me signed in" checked/></span>
-									<button className="btn btn-default button-form"  type="submit">Login</button>
+									<button className="btn btn-default button-form"  type="submit" disabled={ email === "" || password === "" }>Login</button>
 								</div>		
 								{error && <p>{error.message}</p>}
 							</form>		

@@ -5,6 +5,7 @@ import { PasswordForgetLink } from '../../Password/PasswordForget';
 
 import { withBackaccessContext } from '../../BackEnd';
 import * as ROUTES from '../../../const/routes';
+import {store} from "react-notifications-component";
 
 const SignUpPage = () => (
     <section id="user-profile">    
@@ -40,6 +41,17 @@ class SignUpFormBase extends Component {
             .then(() => {
                 this.setState({ ...INITIAL_STATE });
                 this.props.history.push(ROUTES.ACCOUNT);
+                store.addNotification({
+                    title: 'Signup success',
+                    message: 'Welcome aboard',
+                    type: 'default',                         // 'default', 'success', 'info', 'warning'
+                    container: 'bottom-right',                // where to position the notifications
+                    animationIn: ["animated", "fadeIn"],     // animate.css classes that's applied
+                    animationOut: ["animated", "fadeOut"],   // animate.css classes that's applied
+                    dismiss: {
+                        duration: 3000
+                    }
+                })
                 console.log("ok")
             })
             .catch(error => {
@@ -101,8 +113,8 @@ class SignUpFormBase extends Component {
                                     <input type="password" class="form-control" value={passwordTwo} onChange={this.onChange} name="passwordTwo" id="passwordTwo" />
                                 </li>
                             </ul>
-                            <div class="col-sm-12 col-md-6 text-right">
-                                <button class="btn btn-default signin-button" type="submit"><i class="fa fa-sign-in"></i> Sign up</button>
+                            <div class="text-right">
+                                <button class="btn btn-default signin-button" type="submit" disabled={ email === "" || passwordOne === "" || passwordTwo === "" || username === "" || name === ""}><i class="fa fa-sign-in"></i> Sign up</button>
                                 {error && <p>{error.message}</p>}
                             </div>
                         </form>

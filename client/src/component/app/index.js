@@ -7,12 +7,13 @@ import SignInPage from '../Sign/SignIn';
 import AccountPage from '../Account';
 import Header from '../header';
 import PasswordForgetPage from '../Password/PasswordForget';
-
+import ReactNotifications from 'react-notifications-component';
 import * as ROUTES from '../../const/routes';
 import { withAuthentification } from '../Session';
 import {Triplist, Createtrip,TripDetail} from '../Trip'
 const App = () => (
 		<div id="page-container">
+			<ReactNotifications />
 			<Router>
 				<Header />
 				<div class="clear"/>

@@ -65,6 +65,7 @@
 #login-page .footer-form .button-form,
 #signin-page .footer-form .button-form {
   padding: 6px 26px;
+  background-color: #27ae60;
 }
 /* #login-page, #signin-page */
 #login-page .title {
