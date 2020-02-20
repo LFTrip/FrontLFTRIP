@@ -45,8 +45,12 @@ export default class BackConnexion{
                 "password" : data.password,
             }).then(response=> {
 
-            if(response.status === 200){
-                console.log(response.data)
+            if(response.status === 201){
+                data = {
+                    token : response.data
+                }
+                localStorage.setItem('authUser',  JSON.stringify(data)  )
+
             }else{
                 ///reject( console.log(response.data));
             }

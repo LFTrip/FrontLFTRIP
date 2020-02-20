@@ -37,27 +37,15 @@ class SignUpFormBase extends Component {
         const { username,name, email, passwordOne } = this.state;
         this.props.backaccess
             .doCreateUserWithEmailAndPassword({firstname: username, lastname: name, email : email, password : passwordOne})
-            .then(authUser => {
-                this.setState({ ...INITIAL_STATE });
-                this.props.history.push(ROUTES.SIGN_IN);
-                console.log("ok")
-            })
-            .then(() => {
-                let notifId = this.props.backaccess.notifications().push().key;
-                this.props.backaccess.user(this.state.uid).update({
-                    notifId: notifId
-                });
-                return this.props.backaccess.doSendEmailVerification();
-            })
             .then(() => {
                 this.setState({ ...INITIAL_STATE });
                 this.props.history.push(ROUTES.ACCOUNT);
+                console.log("ok")
             })
             .catch(error => {
                 if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
                 error.message = ERROR_MSG_ACCOUNT_EXISTS;
                 }
-
                 this.setState({ error });
             });
 
