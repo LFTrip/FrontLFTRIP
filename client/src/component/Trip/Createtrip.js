@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
+import { Label, Input } from 'reactstrap';
 
 export default class Createtrip extends Component{
     constructor(props){
         super(props);
         this.state = {
-
         }
     }
-
 
     render()
     {
@@ -20,7 +19,7 @@ export default class Createtrip extends Component{
 
                             <div class="info-block" id="basic">
                                 <div class="section-title line-style no-margin">
-                                    <h3 class="title">Basic Information</h3>
+                                    <h3 class="title">Les informations de base concernant le voyage</h3>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5 space-form">
@@ -30,75 +29,54 @@ export default class Createtrip extends Component{
                                         <input id="address" class="form-control" type="text" placeholder="Address" name="address"/>
                                     </div>
                                     <div class="col-md-12">
-                                        <textarea name="description" id="description" class="form-control description">
-                            
-                                            ipsum dolor sit amet, consectetur adipiscing elit. Mauris vulputate augue non bibendum dapibus.
-                                            Phasellus fermentum nulla non ultricies vestibulum. Curabitur dictum nisl quis condimentum tempus. 
-                                            Integer et libero pellentesque, rutrum nibh in, auctor elit. Pellentesque sit amet facilisis ante,
-                                            quis dictum lectus. Morbi nec dui enim. Duis consectetur tellus a dignissim sollicitudin. 
-                                            Quisque interdum id nisi vitae mattis. Curabitur non tortor a arcu gravida elementum ut a nisi.
-                                            Sed porta turpis in elementum vulputate.
-                                        </textarea>
+                                        <textarea name="description" id="description" placeholder="Veuillez saisir la description de votre voyage" 
+                                        class="form-control description"></textarea>
+                                    </div>
+                                    <div class="col-md-5 space-form">
+                                    <Label for="exampleDate">Date de début</Label>
+                                        <Input type="date" name="date" id="exampleDate" placeholder="date de début"/>
+                                    </div>
+                                    <div class="col-md-5 space-form">
+                                    <Label for="exampleDate">Date de fin</Label>
+                                        <Input type="date" name="date" id="exampleDate" placeholder="date de fin"/>
                                     </div>
                                 </div>
+                            
                             </div>
                             <div class="info-block" id="summary">
                                 <div class="section-title line-style">
-                                    <h3 class="title">Summary</h3>
+                                    <h3 class="title">Plus de détails</h3>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-4 space-form">
-                                        <div class="slider" id="price-range"></div>
-                                        <div class="price-slider price">
-                                            <span id="price-value-min">200   </span> 
-                                            <span class="separator">$</span>
-                                            <span id="price-value-max">9000</span>					
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 space-form">
                                         <select class="dropdown" data-settings='{"cutOff": 5}'>
-                                            <option value="">-- Any Purpose --</option>
-                                            <option value="rent">Rent</option>
-                                            <option value="sell">Sell</option>                        
+                                            <option value="">Achat/Location</option>
+                                            <option value="rent">Location</option>
+                                            <option value="sell">Achat</option>                        
                                         </select>
                                     </div>
                                     <div class="col-md-4 space-form">
                                         <select class="dropdown" data-settings='{"cutOff": 5}'>
-                                            <option value="">-- Any Type --</option>
-                                            <option value="apartments">Apartments</option>
-                                            <option value="condos">Condos</option>
+                                            <option value="">Type de logement</option>
+                                            <option value="apartments">Appartement</option>
+                                            <option value="condos">Hôtel</option>
                                             <option value="duplex">Duplex</option>
-                                            <option value="houses">Houses</option>
-                                            <option value="offices">Offices</option>
-                                            <option value="retail">Retail</option>
-                                            <option value="villa">Villa</option>                        
+                                            <option value="houses">Villa</option>
+                                            <option value="offices">Tente</option>
+                                            <option value="retail">Auberge de jeunesse</option>
                                         </select>
                                     </div>
                                     <div class="col-md-4 space-form">
-                                        <select class="dropdown">
-                                            <option value="">-- Any Status --</option>
-                                            <option value="Normal">Normal</option>
-                                            <option value="Available">Available</option>
-                                            <option value="Not Available">Not Available</option>
-                                            <option value="Sold">Sold</option>
-                                            <option value="Open House">Open House</option>
-                                        </select>
+                                        <input class="form-control" type="text" name="bathroom" id="bathroom" data-text="Bathroom" placeholder="Age moyen"/>
                                     </div>
                                     <div class="col-md-4 space-form">
-                                        <input class="form-control" type="text" name="bathroom" id="bathroom" data-text="Bathroom" value="3" />
+                                        <input class="form-control" type="text" name="bedroom" id="bedroom" data-text="Bedroom" placeholder="Nombre de personnes" />
                                     </div>
                                     <div class="col-md-4 space-form">
-                                        <input class="form-control" type="text" name="bedroom" id="bedroom" data-text="Bedroom" value="2" />
+                                        <input id="periodic-price" class="form-control" type="text" placeholder="Prix" name="periodic-price" />
                                     </div>
                                     <div class="col-md-4 space-form">
-                                        <input class="form-control" type="text" name="property-size" id="property-size" data-text="Size Property" value="120" />
-                                    </div>
-                                    <div class="col-md-4 space-form">
-                                        <input id="video-source" class="form-control" type="text" placeholder="Video source ID" name="video-source"/>
-                                    </div>
-                                    <div class="col-md-4 space-form">
-                                        <input id="periodic-price" class="form-control" type="text" placeholder="Price Label (e.g. 'per month')" name="periodic-price" />
+                                        <input id="pays" class="form-control" type="text" placeholder="Pays" name="pays" />
                                     </div>
                                 </div>
                             </div>
@@ -111,18 +89,13 @@ export default class Createtrip extends Component{
                                     <strong>Drop files</strong> here or <strong>click</strong> to upload.<br />
                                 </span>
                             </div>
-
-                           <div class="info-block" id="map">
-                                <div class="section-title line-style">
-                                    <h3 class="title">Place on Map</h3>
-                                </div>
-                                <div id="map-canvas" style={{height: "300px"}}></div>
-                                <div id="position"><i class="fa fa-map-marker"></i> Drag the pin to the location on the map</div>
+                            <div class="section-title space-form">
+                            <button className="btn btn-default button-form"  type="submit">Poster le voyage</button>
                             </div>
-                       </div>
-                    </div>
                 </div>
-		    </section>
+            </div>
+        </div>
+		</section>
         )
     }
 }
