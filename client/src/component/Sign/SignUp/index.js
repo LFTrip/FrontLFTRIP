@@ -14,13 +14,20 @@ const SignUpPage = () => (
 );
 
 const INITIAL_STATE = {
-  username: '',
-  name: '',
-  email: '',
-  passwordOne: '',
-  passwordTwo: '',
-  isAdmin: false,
-  error: null,
+    username: '',
+    name: '',
+    email: '',
+    passwordOne: '',
+    passwordTwo: '',
+    isAdmin: false,
+    formErrors: {username: '', name: '', email: '', passwordOne: '', passwordTwo: ''},
+    usernameValid: false,
+    nameValid: false,
+    emailValid: false,
+    passwordOneValid: false,
+    passwordTwoValid: false,
+    formValid: false,
+    error: null
 };
 
 const ERROR_CODE_ACCOUNT_EXISTS = 'le compte existe deja';
@@ -65,8 +72,57 @@ class SignUpFormBase extends Component {
   };
 
   onChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
+      const name = event.target.name;
+      const value = event.target.value;
+      this.setState({ [event.target.name]: event.target.value },
+          () => { this.validateField(name, value) });
   };
+
+    validateField(fieldName, value) {
+        let fieldValidationErrors = this.state.formErrors;
+        let usernameValid = this.state.usernameValid;
+        let nameValid = this.state.nameValid;
+        let emailValid = this.state.emailValid;
+        let passwordOneValid = this.state.passwordOneValid;
+        let passwordTwoValid = this.state.passwordTwoValid;
+
+
+        switch(fieldName) {
+            case 'username':
+                usernameValid = value.length >= 0;
+                fieldValidationErrors.username = usernameValid ? '': ' must be superior to 6 characters';
+                break;
+            case 'name':
+                nameValid = value.length >= 0;
+                fieldValidationErrors.name = nameValid ? '': ' must be superior to 6 characters';
+                break;
+            case 'email':
+                emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+                fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+                break;
+            case 'passwordOne':
+                passwordOneValid = value.length >= 6;
+                fieldValidationErrors.passwordOne = passwordOneValid ? '': ' must be superior to 6 characters';
+                break;
+            case 'passwordTwo':
+                passwordTwoValid = value.length >= 6;
+                fieldValidationErrors.passwordTwo = passwordTwoValid ? '': ' must be superior to 6 characters';
+                break;
+            default:
+                break;
+        }
+        this.setState({formErrors: fieldValidationErrors,
+            usernameValid: usernameValid,
+            nameValid: nameValid,
+            emailValid: emailValid,
+            passwordOneValid: passwordOneValid,
+            passwordTwoValid: passwordTwoValid
+        }, this.validateForm);
+    }
+
+    validateForm() {
+        this.setState({formValid: this.state.usernameValid && this.state.nameValid && this.state.emailValid && this.state.passwordOneValid && this.state.passwordTwoValid});
+    }
 
   onChangeCheckbox = event => {
         this.setState({ [event.target.name]: event.target.checked });
@@ -96,25 +152,50 @@ class SignUpFormBase extends Component {
                                     <span>User Name</span>
                                     <input  placeholder="Full Name"  value={username} onChange={this.onChange} type="text" class="form-control" name="username" id="username" />
                                 </li>
+                                { !this.state.usernameValid ? (
+                                    <small className="color-red">{ "cant be blank" }</small>
+                                ) : (
+                                    ""
+                                )}
                                 <li>
                                     <span>Name</span>
                                     <input value={name}  onChange={this.onChange} type="text"  placeholder=" Name" class="form-control" name="name" id="name" />
                                 </li>
+                                { !this.state.nameValid ? (
+                                    <small className="color-red">{ "cant be blank" }</small>
+                                ) : (
+                                    ""
+                                )}
                                 <li>
                                     <span>Email Address</span>
                                     <input type="text"  value={email}  onChange={this.onChange} placeholder="Email Address"  class="form-control" name="email" id="email" />
                                 </li>
+                                { !this.state.emailValid ? (
+                                    <small className="color-red">{ "invalid email syntax" }</small>
+                                ) : (
+                                    ""
+                                )}
                                 <li>
                                     <span>Password</span>
                                     <input type="password" class="form-control" value={passwordOne} onChange={this.onChange} name="passwordOne" id="passwordOne" />
                                 </li>
+                                { !this.state.passwordOneValid ? (
+                                    <small className="color-red">{ "password must have more than 6 character" }</small>
+                                ) : (
+                                    ""
+                                )}
                                 <li>
                                     <span>Pepeat Password</span>
                                     <input type="password" class="form-control" value={passwordTwo} onChange={this.onChange} name="passwordTwo" id="passwordTwo" />
                                 </li>
+                                { !this.state.passwordTwoValid ? (
+                                    <small className="color-red">{ "password must have more than 6 character" }</small>
+                                ) : (
+                                    ""
+                                )}
                             </ul>
                             <div class="text-right">
-                                <button class="btn btn-default signin-button" type="submit" disabled={ email === "" || passwordOne === "" || passwordTwo === "" || username === "" || name === ""}><i class="fa fa-sign-in"></i> Sign up</button>
+                                <button class="btn btn-default signin-button" type="submit" disabled={!this.state.formValid}><i class="fa fa-sign-in"></i> Sign up</button>
                                 {error && <p>{error.message}</p>}
                             </div>
                         </form>
